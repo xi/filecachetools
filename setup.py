@@ -4,10 +4,10 @@ from setuptools import setup
 
 
 setup(
-	name='filecache',
+	name='filecachetools',
 	version='0.0.0',
 	description="cachetools compatible persistent cache",
-	url='https://github.com/xi/filecache',
+	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',
 	author_email='tobias.bengfort@posteo.de',
 	py_modules=['filecache'],
