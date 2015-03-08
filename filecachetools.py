@@ -64,6 +64,22 @@ class BaseCache(object):
 		else:
 			raise KeyError(key)
 
+	def expire(self):
+		"""Delete items based on TTL."""
+		if self.ttl is not None:
+			threshold = time() - self.ttl
+
+			for key in self:
+				if self.mtime(key) < threshold:
+					del self[key]
+
+	def limit(self):
+		"""Delete items with lowest weight until cache fits maxsize."""
+		self.expire()
+		while self.currsize > self.maxsize:
+			key = min(self, key=self.getweightof)
+			del self[key]
+
 
 class Cache(BaseCache):
 	def __init__(self, name, maxsize, ttl=None, missing=None):
@@ -133,22 +149,6 @@ class Cache(BaseCache):
 
 	def getweightof(self, key):
 		return self.getmtimeof(key)
-
-	def expire(self):
-		"""Delete items based on TTL."""
-		if self.ttl is not None:
-			threshold = time() - self.ttl
-
-			for key in self:
-				if self.mtime(key) < threshold:
-					del self[key]
-
-	def limit(self):
-		"""Delete items with lowest weight until cache fits maxsize."""
-		self.expire()
-		while self.currsize > self.maxsize:
-			key = min(self, key=self.getweightof)
-			del self[key]
 
 
 class LRUCache(Cache):
