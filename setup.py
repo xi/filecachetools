@@ -10,7 +10,7 @@ setup(
 	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',
 	author_email='tobias.bengfort@posteo.de',
-	py_modules=['filecache'],
+	py_modules=['filecachetools'],
 	install_requires=[
 		'cachetools',
 	],
