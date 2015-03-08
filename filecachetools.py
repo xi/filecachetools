@@ -22,6 +22,9 @@ class BaseCache(object):
 		self.ttl = ttl
 		self.missing = missing
 
+	def keys(self):
+		return list(self)
+
 	def values(self):
 		return [self[key] for key in self]
 
@@ -71,48 +74,53 @@ class Cache(BaseCache):
 		if not os.path.exists(self.dir_name):
 			os.makedirs(self.dir_name)
 
+	def _path(self, key):
+		return os.path.join(self.dir_name, str(hash(key)))
+
 	def __getitem__(self, key):
+		path = self._path(key)
 		if key in self:
-			path = os.path.join(self.dir_name, key)
 			with open(path) as fh:
-				return pickle.load(fh)
+				_key, value = pickle.load(fh)
+				assert _key == key
+				return value
 		else:
 			raise KeyError(key)
 
 	def __setitem__(self, key, value):
-		path = os.path.join(self.dir_name, key)
+		path = self._path(key)
 		with open(path, 'w') as fh:
-			pickle.dump(value, fh)
+			pickle.dump((key, value), fh)
 		self.limit()
 
 	def __delitem__(self, key):
 		if key in self:
-			path = os.path.join(self.dir_name, key)
+			path = self._path(key)
 			os.unlink(path)
 		else:
 			raise KeyError(key)
 
 	def __contains__(self, key):
-		path = os.path.join(self.dir_name, key)
+		path = self._path(key)
 		return os.path.exists(path)
 
-	def keys(self):
-		return os.listdir(self.dir_name)
-
 	def __iter__(self):
-		for key in self.keys():
+		for filename in os.listdir(self.dir_name):
+			path = os.path.join(self.dir_name, filename)
+			with open(path) as fh:
+				key, value = pickle.load(fh)
 			yield key
 
 	def getatimeof(self, key):
 		if key in self:
-			path = os.path.join(self.dir_name, key)
+			path = self._path(key)
 			return os.path.getatime(path)
 		else:
 			raise KeyError(key)
 
 	def getmtimeof(self, key):
 		if key in self:
-			path = os.path.join(self.dir_name, key)
+			path = self._path(key)
 			return os.path.getmtime(path)
 		else:
 			raise KeyError(key)
