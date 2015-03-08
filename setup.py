@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 	name='filecachetools',
-	version='0.0.2',
+	version='0.0.3',
 	description="cachetools compatible persistent cache",
 	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',

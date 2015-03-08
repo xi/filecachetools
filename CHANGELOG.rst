@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.3
+-----
+
+- provide ``Cache.clear()``
+
+
 0.0.2
 -----
 
