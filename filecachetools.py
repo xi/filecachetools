@@ -73,7 +73,7 @@ class BaseCache(object):
 				if self.mtime(key) < threshold:
 					del self[key]
 
-	def limit(self):
+	def clear(self):
 		"""Delete items with lowest weight until cache fits maxsize."""
 		self.expire()
 		while self.currsize > self.maxsize:
@@ -107,7 +107,7 @@ class Cache(BaseCache):
 		path = self._path(key)
 		with open(path, 'w') as fh:
 			pickle.dump((key, value), fh)
-		self.limit()
+		self.clear()
 
 	def __delitem__(self, key):
 		if key in self:
