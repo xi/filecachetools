@@ -172,8 +172,9 @@ def ttl_cache(name, maxsize=128, ttl=600, typed=False):
 	"""
 	return cachedfunc(Cache(name, maxsize, ttl=ttl), typed)
 
+
 __all__ = (
-    'Cache', 'LRUCache',
-    'cachedmethod',
-    'lru_cache', 'ttl_cache',
+	'Cache', 'LRUCache',
+	'cachedmethod',
+	'lru_cache', 'ttl_cache',
 )
