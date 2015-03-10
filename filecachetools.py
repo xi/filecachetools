@@ -16,6 +16,29 @@ CACHE_DIR = os.path.expanduser('~/.cache/')
 MARKER = object()
 
 
+class FilenameMarker(object):
+	"""Marker for filenames.
+
+	Many methods if :py:class:`Cache` take a key that identifies a cache item.
+	This key is converted to a file path by :py:meth:`Cache._path` by creating
+	a hash of the key and appending it to :py:attr:`Cache.dir_name`.
+
+	Unfortunately, the original key is available in :py:meth:`Cache.__iter__`.
+	Three solutions come to mind:
+
+	1.  Keep a separate list of all keys
+	2.  Store the key with each cache item
+	3.  Allow to also pass the filename to :py:meth`Cache._path`
+
+	This is used to implement the last option by providing a way to distinguish
+	between regular keys and filenames. Keys therefore must not be instances of
+	this class.
+
+	"""
+	def __init__(self, value):
+		self.value = value
+
+
 class BaseCache(object):
 	def __init__(self, maxsize, ttl=None, missing=None):
 		self.maxsize = maxsize
@@ -91,7 +114,11 @@ class Cache(BaseCache):
 			os.makedirs(self.dir_name)
 
 	def _path(self, key):
-		return os.path.join(self.dir_name, str(hash(key)))
+		if isinstance(key, FilenameMarker):
+			filename = filename.value
+		else:
+			filename = str(hash(key)
+		return os.path.join(self.dir_name, filename)
 
 	def __getitem__(self, key):
 		path = self._path(key)
