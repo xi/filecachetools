@@ -45,14 +45,8 @@ class BaseCache(object):
 		self.ttl = ttl
 		self.missing = missing
 
-	def keys(self):
-		return list(self)
-
 	def values(self):
 		return [self[key] for key in self]
-
-	def items(self):
-		return [(key, self[key]) for key in self]
 
 	@property
 	def currsize(self):
