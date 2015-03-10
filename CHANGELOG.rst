@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.0.4
+-----
+
+-   Fix: atime was changed on overy call to ``__iter__`` causing
+    unexpected behavior on ``LRUCache``.
+
+
 0.0.3
 -----
 
