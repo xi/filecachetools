@@ -2,11 +2,14 @@
 
 from setuptools import setup
 
+import filecachetools
+
 
 setup(
 	name='filecachetools',
-	version='0.0.3',
+	version=filecachetools.__version__,
 	description="cachetools compatible persistent cache",
+	long_description=filecachetools.__doc__,
 	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',
 	author_email='tobias.bengfort@posteo.de',
