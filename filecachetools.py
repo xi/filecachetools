@@ -115,25 +115,23 @@ class Cache(BaseCache):
 
 	def _path(self, key):
 		if isinstance(key, FilenameMarker):
-			filename = filename.value
+			filename = key.value
 		else:
-			filename = str(hash(key)
+			filename = str(hash(key))
 		return os.path.join(self.dir_name, filename)
 
 	def __getitem__(self, key):
 		path = self._path(key)
 		if key in self:
 			with open(path) as fh:
-				_key, value = pickle.load(fh)
-				assert _key == key
-				return value
+				return pickle.load(fh)
 		else:
 			raise KeyError(key)
 
 	def __setitem__(self, key, value):
 		path = self._path(key)
 		with open(path, 'w') as fh:
-			pickle.dump((key, value), fh)
+			pickle.dump(value, fh)
 		self.clear()
 
 	def __delitem__(self, key):
@@ -149,10 +147,7 @@ class Cache(BaseCache):
 
 	def __iter__(self):
 		for filename in os.listdir(self.dir_name):
-			path = os.path.join(self.dir_name, filename)
-			with open(path) as fh:
-				key, value = pickle.load(fh)
-			yield key
+			yield FilenameMarker(filename)
 
 	def getatimeof(self, key):
 		if key in self:
