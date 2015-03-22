@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.0.6
+-----
+
+-   Fix: :py:obj:`ttl` was not properly passed to the base
+    constructor so that old items were not removed after the
+    specified time.
+
+
 0.0.5
 -----
 
