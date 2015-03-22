@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.0.5
+-----
+
+-   Fix: setup.py imported filecachetools causing an ImportError if
+    cachetools was not installed.
+
+
 0.0.4
 -----
 
