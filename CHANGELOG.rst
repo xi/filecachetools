@@ -4,21 +4,22 @@ Changelog
 0.0.5
 -----
 
--   Fix: setup.py imported filecachetools causing an ImportError if
-    cachetools was not installed.
+-   Fix: :py:mod:`setup.py` imported :py:mod:`filecachetools`
+    causing an :py:exc:`ImportError` when :py:mod:`cachetools`
+    was not installed.
 
 
 0.0.4
 -----
 
--   Fix: atime was changed on overy call to ``__iter__`` causing
-    unexpected behavior on ``LRUCache``.
+-   Fix: atime was changed on overy call to :py:func:`__iter__`
+    causing unexpected behavior on :py:class:`LRUCache`.
 
 
 0.0.3
 -----
 
--   provide ``Cache.clear()``
+-   provide :py:meth:`Cache.clear`
 
 
 0.0.2
