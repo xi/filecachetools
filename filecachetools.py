@@ -192,7 +192,9 @@ def ttl_cache(name, maxsize=128, ttl=600, typed=False):
 
 
 __all__ = (
-	'Cache', 'LRUCache',
+	'Cache',
+	'LRUCache',
 	'cachedmethod',
-	'lru_cache', 'ttl_cache',
+	'lru_cache',
+	'ttl_cache',
 )
