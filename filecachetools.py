@@ -102,7 +102,7 @@ class BaseCache(object):
 
 class Cache(BaseCache):
 	def __init__(self, name, maxsize, ttl=None, missing=None):
-		BaseCache.__init__(self, maxsize, missing)
+		BaseCache.__init__(self, maxsize, ttl=ttl, missing=missing)
 		self.name = name
 		self.dir_name = os.path.join(CACHE_DIR, name)
 
