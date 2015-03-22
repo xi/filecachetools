@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.7
+-----
+
+-   Another fix to ttl expiry
+
+
 0.0.6
 -----
 
