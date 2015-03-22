@@ -2,14 +2,30 @@
 
 from setuptools import setup
 
-import filecachetools
+
+with open('filecachetools.py') as fh:
+	docstring = []
+	docstring_done = False
+
+	for line in fh:
+		line = line.rstrip()
+
+		if line == '"""':
+			docstring_done = True
+		elif not docstring_done:
+			docstring.append(line)
+		elif line.startswith('__version__ = '):
+			version = line[15:].rstrip('\'')
+			break
+
+	docstring = '\n'.join(docstring)[3:]
 
 
 setup(
 	name='filecachetools',
-	version=filecachetools.__version__,
+	version=version,
 	description="cachetools compatible persistent cache",
-	long_description=filecachetools.__doc__,
+	long_description=docstring,
 	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',
 	author_email='tobias.bengfort@posteo.de',
