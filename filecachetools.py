@@ -89,7 +89,7 @@ class BaseCache(object):
 			threshold = time() - self.ttl
 
 			for key in self:
-				if self.mtime(key) < threshold:
+				if self.getmtimeof(key) < threshold:
 					del self[key]
 
 	def clear(self):
