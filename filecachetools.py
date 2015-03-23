@@ -151,7 +151,7 @@ class Cache(BaseCache):
 		path = self._path(key)
 		if key in self:
 			if self._is_fresh(key):
-				with open(path) as fh:
+				with open(path, 'rb') as fh:
 					return pickle.load(fh)
 			else:
 				del self[key]
@@ -159,7 +159,7 @@ class Cache(BaseCache):
 
 	def __setitem__(self, key, value):
 		path = self._path(key)
-		with open(path, 'w') as fh:
+		with open(path, 'wb') as fh:
 			pickle.dump(value, fh)
 		self.limit()
 
