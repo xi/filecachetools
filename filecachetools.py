@@ -86,13 +86,17 @@ class BaseCache(object):
 		else:
 			raise KeyError(key)
 
+	def _is_fresh(self, key):
+		if self.ttl is None:
+			return True
+		else:
+			return self.getmtimeof(key) >= time() - self.ttl
+
 	def expire(self):
 		"""Delete items based on TTL."""
 		if self.ttl is not None:
-			threshold = time() - self.ttl
-
 			for key in self:
-				if self.getmtimeof(key) < threshold:
+				if not self._is_fresh(key):
 					del self[key]
 
 	def limit(self):
@@ -148,10 +152,12 @@ class Cache(BaseCache):
 	def __getitem__(self, key):
 		path = self._path(key)
 		if key in self:
-			with open(path) as fh:
-				return pickle.load(fh)
-		else:
-			raise KeyError(key)
+			if self._is_fresh(key):
+				with open(path) as fh:
+					return pickle.load(fh)
+			else:
+				del self[key]
+		raise KeyError(key)
 
 	def __setitem__(self, key, value):
 		path = self._path(key)
