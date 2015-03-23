@@ -132,8 +132,9 @@ class BaseCache(object):
 
 
 class Cache(BaseCache):
-	def __init__(self, name, maxsize, ttl=None, missing=None):
+	def __init__(self, name, maxsize, ttl=None, missing=None, protocol=None):
 		BaseCache.__init__(self, maxsize, ttl=ttl, missing=missing)
+		self.protocol = protocol
 		self.name = name
 		self.dir_name = os.path.join(CACHE_DIR, name)
 
@@ -160,7 +161,7 @@ class Cache(BaseCache):
 	def __setitem__(self, key, value):
 		path = self._path(key)
 		with open(path, 'wb') as fh:
-			pickle.dump(value, fh)
+			pickle.dump(value, fh, protocol=self.protocol)
 		self.limit()
 
 	def __delitem__(self, key):
