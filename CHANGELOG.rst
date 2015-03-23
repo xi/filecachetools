@@ -1,6 +1,25 @@
 Changelog
 =========
 
+0.1.0
+-----
+
+-   Delete outdated cache items on get, not only when
+    :py:func:`expire` is called.
+
+-   :py:func:`clear` now actually removes all items from the
+    cache instead of only removing outdated ones and limiting
+    to :py:obj:`maxsize`.
+
+-   Added python3 support.  Note that this only means that
+    the library works with both python2 and python3.  There
+    are no tests for using the same cached items with both.
+    See also http://bugs.python.org/issue6137.
+
+-   Fix: :py:func:`getatimeof` did report the time of the last
+    get instead of the time of the last get *or* set.
+
+
 0.0.7
 -----
 
