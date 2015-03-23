@@ -47,9 +47,6 @@ class BaseCache(object):
 		self.ttl = ttl
 		self.missing = missing
 
-	def keys(self):
-		return list(self)
-
 	def values(self):
 		return [self[key] for key in self]
 
@@ -107,29 +104,30 @@ class BaseCache(object):
 			del self[key]
 
 	def clear(self):
-		keys = self.keys()
+		keys = list(self)
+
 		for key in keys:
 			del self[key]
 
-	def __getitem__(self, key):
+	def __getitem__(self, key):  # pragma: nocover
 		raise NotImplementedError
 
-	def __setitem__(self, key, value):
+	def __setitem__(self, key, value):  # pragma: nocover
 		raise NotImplementedError
 
-	def __delitem__(self, key):
+	def __delitem__(self, key):  # pragma: nocover
 		raise NotImplementedError
 
-	def __contains__(self, key):
+	def __contains__(self, key):  # pragma: nocover
 		raise NotImplementedError
 
-	def __iter__(self, key):
+	def __iter__(self, key):  # pragma: nocover
 		raise NotImplementedError
 
-	def getmtimeof(self, key):
+	def getmtimeof(self, key):  # pragma: nocover
 		raise NotImplementedError
 
-	def getweightof(self, key):
+	def getweightof(self, key):  # pragma: nocover
 		raise NotImplementedError
 
 
@@ -209,7 +207,7 @@ class LRUCache(Cache):
 		return self.getatimeof(key)
 
 
-def lru_cache(name, maxsize=128, ttl=None, typed=False):
+def lru_cache(name, maxsize=128, ttl=None, typed=False):  # pragma: nocover
 	"""Decorator to wrap a function with a memoizing callable that saves
 	up to `maxsize` results based on a Least Recently Used (LRU)
 	algorithm.
@@ -218,7 +216,7 @@ def lru_cache(name, maxsize=128, ttl=None, typed=False):
 	return cachedfunc(LRUCache(name, maxsize, ttl=ttl), typed)
 
 
-def ttl_cache(name, maxsize=128, ttl=600, typed=False):
+def ttl_cache(name, maxsize=128, ttl=600, typed=False):  # pragma: nocover
 	"""Decorator to wrap a function with a memoizing callable that saves
 	up to `maxsize` results based on a per-item time-to-live (TTL) value.
 
