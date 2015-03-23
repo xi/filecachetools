@@ -47,6 +47,9 @@ class BaseCache(object):
 		self.ttl = ttl
 		self.missing = missing
 
+	def keys(self):
+		return list(self)
+
 	def values(self):
 		return [self[key] for key in self]
 
@@ -92,11 +95,16 @@ class BaseCache(object):
 				if self.getmtimeof(key) < threshold:
 					del self[key]
 
-	def clear(self):
+	def limit(self):
 		"""Delete items with lowest weight until cache fits maxsize."""
 		self.expire()
 		while self.currsize > self.maxsize:
 			key = min(self, key=self.getweightof)
+			del self[key]
+
+	def clear(self):
+		keys = self.keys()
+		for key in keys:
 			del self[key]
 
 	def __getitem__(self, key):
@@ -149,7 +157,7 @@ class Cache(BaseCache):
 		path = self._path(key)
 		with open(path, 'w') as fh:
 			pickle.dump(value, fh)
-		self.clear()
+		self.limit()
 
 	def __delitem__(self, key):
 		if key in self:
