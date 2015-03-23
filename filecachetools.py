@@ -99,6 +99,27 @@ class BaseCache(object):
 			key = min(self, key=self.getweightof)
 			del self[key]
 
+	def __getitem__(self, key):
+		raise NotImplementedError
+
+	def __setitem__(self, key, value):
+		raise NotImplementedError
+
+	def __delitem__(self, key):
+		raise NotImplementedError
+
+	def __contains__(self, key):
+		raise NotImplementedError
+
+	def __iter__(self, key):
+		raise NotImplementedError
+
+	def getmtimeof(self, key):
+		raise NotImplementedError
+
+	def getweightof(self, key):
+		raise NotImplementedError
+
 
 class Cache(BaseCache):
 	def __init__(self, name, maxsize, ttl=None, missing=None):
