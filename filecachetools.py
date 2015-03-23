@@ -181,7 +181,9 @@ class Cache(BaseCache):
 	def getatimeof(self, key):
 		if key in self:
 			path = self._path(key)
-			return os.path.getatime(path)
+			mtime = os.path.getmtime(path)
+			atime = os.path.getatime(path)
+			return max(atime, mtime)
 		else:
 			raise KeyError(key)
 
