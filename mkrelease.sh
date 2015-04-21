@@ -1,6 +1,6 @@
 #!/bin/sh
 
-v=$(grep __version__ filecachetools.py | sed "s/__version__ = //;s/'//g")
+v=$(python setup.py --version)
 git tag $v
 git push origin master
 git push origin $v
