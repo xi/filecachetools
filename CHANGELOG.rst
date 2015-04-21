@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.1
+-----
+
+-   Raise less KeyErrors on parallel execution.
+
+
 0.1.0
 -----
 
