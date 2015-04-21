@@ -25,7 +25,7 @@ class FilenameMarker(object):
 	This key is converted to a file path by :py:meth:`Cache._path` by creating
 	a hash of the key and appending it to :py:attr:`Cache.dir_name`.
 
-	Unfortunately, the original key is available in :py:meth:`Cache.__iter__`.
+	Unfortunately, the original key is unavailable in :py:meth:`Cache.__iter__`.
 	Three solutions come to mind:
 
 	1.  Keep a separate list of all keys
