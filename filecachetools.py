@@ -93,21 +93,30 @@ class BaseCache(object):
 		"""Delete items based on TTL."""
 		if self.ttl is not None:
 			for key in self:
-				if not self._is_fresh(key):
-					del self[key]
+				try:
+					if not self._is_fresh(key):
+						del self[key]
+				except KeyError:
+					pass
 
 	def limit(self):
 		"""Delete items with lowest weight until cache fits maxsize."""
 		self.expire()
 		while self.currsize > self.maxsize:
 			key = min(self, key=self.getweightof)
-			del self[key]
+			try:
+				del self[key]
+			except KeyError:
+				pass
 
 	def clear(self):
 		keys = list(self)
 
 		for key in keys:
-			del self[key]
+			try:
+				del self[key]
+			except KeyError:
+				pass
 
 	def __getitem__(self, key):  # pragma: nocover
 		raise NotImplementedError
