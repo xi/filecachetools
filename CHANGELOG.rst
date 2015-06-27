@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.2
+-----
+
+-   Adapt to internal changes in chachetools
+
+
 0.1.1
 -----
 

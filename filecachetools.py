@@ -19,7 +19,7 @@ except ImportError:  # pragma: nocover
 CACHE_DIR = os.path.expanduser('~/.cache/')
 MARKER = object()
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class FilenameMarker(object):
