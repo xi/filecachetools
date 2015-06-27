@@ -9,8 +9,12 @@ from time import time
 import os
 import pickle
 
-from cachetools.decorators import cachedfunc
-from cachetools.decorators import cachedmethod  # noqa
+try:  # pragma: nocover
+	from cachetools.decorators import cachedfunc
+	from cachetools.decorators import cachedmethod  # noqa
+except ImportError:  # pragma: nocover
+	from cachetools.func import _cachedfunc as cachedfunc
+	from cachetools.method import cachedmethod  # noqa
 
 CACHE_DIR = os.path.expanduser('~/.cache/')
 MARKER = object()
