@@ -52,13 +52,16 @@ class BaseCache(object):
 		self.missing = missing
 
 	def values(self):
+		"""Return a list of all cached values."""
 		return [self[key] for key in self]
 
 	@property
 	def currsize(self):
+		"""The accumulated size of all cached values."""
 		return sum(map(self.getsizeof, self))
 
 	def get(self, key, default=None):
+		"""Return a cached value."""
 		if key in self:
 			return self[key]
 		else:
@@ -75,6 +78,12 @@ class BaseCache(object):
 			return default
 
 	def setdefault(self, key, default=None):
+		"""Return or initialize a cached value.
+
+		If the key does not yet exist in the cache, it is created with value
+		`default`. Always returns the cached value.
+
+		"""
 		if key not in self:
 			self[key] = default
 		return self[key]
@@ -114,6 +123,7 @@ class BaseCache(object):
 				pass
 
 	def clear(self):
+		"""Delete all items."""
 		keys = list(self)
 
 		for key in keys:
@@ -145,6 +155,7 @@ class BaseCache(object):
 
 
 class Cache(BaseCache):
+	"""Mutable mapping to serve as a simple cache or cache base class."""
 	def __init__(self, name, maxsize, ttl=None, missing=None, protocol=None):
 		BaseCache.__init__(self, maxsize, ttl=ttl, missing=missing)
 		self.protocol = protocol
@@ -193,6 +204,7 @@ class Cache(BaseCache):
 			yield FilenameMarker(filename)
 
 	def getatimeof(self, key):
+		"""Return the last access time of a cache item."""
 		if key in self:
 			path = self._path(key)
 			mtime = os.path.getmtime(path)
@@ -202,6 +214,7 @@ class Cache(BaseCache):
 			raise KeyError(key)
 
 	def getmtimeof(self, key):
+		"""Return the last modification time of a cache item."""
 		if key in self:
 			path = self._path(key)
 			return os.path.getmtime(path)
@@ -209,16 +222,28 @@ class Cache(BaseCache):
 			raise KeyError(key)
 
 	def getsizeof(self, key):
+		"""Return the size of a cache item's value."""
 		if key in self:
 			return 1
 		else:
 			raise KeyError(key)
 
 	def getweightof(self, key):
+		"""Return the "weight" of a cache item.
+
+		Items with lower weight will be removed from the cache first.
+
+		"""
 		return self.getmtimeof(key)
 
 
 class LRUCache(Cache):
+	"""Least Recently Used (LRU) cache implementation.
+
+	This class discards the least recently used items first to make space
+	when necessary.
+
+	"""
 	def getweightof(self, key):
 		return self.getatimeof(key)
 
