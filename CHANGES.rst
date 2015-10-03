@@ -1,7 +1,14 @@
+0.2.0
+-----
+
+-   Adapt to changes in cachetools 1.1.0.  The only API change
+    is that ``lru_cache`` and ``ttl_cache`` no lonbger accept
+    the ``typed`` argument.
+
 0.1.2
 -----
 
--   Adapt to internal changes in chachetools
+-   Adapt to internal changes in cachetools
 
 
 0.1.1
