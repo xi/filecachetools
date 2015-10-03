@@ -31,7 +31,7 @@ setup(
 	author_email='tobias.bengfort@posteo.de',
 	py_modules=['filecachetools'],
 	install_requires=[
-		'cachetools',
+		'cachetools>=1.1.0',
 	],
 	license='MIT',
 	classifiers=[

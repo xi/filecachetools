@@ -9,17 +9,13 @@ from time import time
 import os
 import pickle
 
-try:  # pragma: nocover
-	from cachetools.decorators import cachedfunc
-	from cachetools.decorators import cachedmethod  # noqa
-except ImportError:  # pragma: nocover
-	from cachetools.func import _cachedfunc as cachedfunc
-	from cachetools.method import cachedmethod  # noqa
+from cachetools import cached
+from cachetools import cachedmethod  # noqa
 
 CACHE_DIR = os.path.expanduser('~/.cache/')
 MARKER = object()
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 
 class FilenameMarker(object):
@@ -248,21 +244,21 @@ class LRUCache(Cache):
 		return self.getatimeof(key)
 
 
-def lru_cache(name, maxsize=128, ttl=None, typed=False):  # pragma: nocover
+def lru_cache(name, maxsize=128, ttl=None):  # pragma: nocover
 	"""Decorator to wrap a function with a memoizing callable that saves
 	up to `maxsize` results based on a Least Recently Used (LRU)
 	algorithm.
 
 	"""
-	return cachedfunc(LRUCache(name, maxsize, ttl=ttl), typed)
+	return cached(LRUCache(name, maxsize, ttl=ttl))
 
 
-def ttl_cache(name, maxsize=128, ttl=600, typed=False):  # pragma: nocover
+def ttl_cache(name, maxsize=128, ttl=600):  # pragma: nocover
 	"""Decorator to wrap a function with a memoizing callable that saves
 	up to `maxsize` results based on a per-item time-to-live (TTL) value.
 
 	"""
-	return cachedfunc(Cache(name, maxsize, ttl=ttl), typed)
+	return cached(Cache(name, maxsize, ttl=ttl))
 
 
 __all__ = (
