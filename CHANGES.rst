@@ -1,8 +1,14 @@
+0.3.0
+-----
+
+-   ``Cache`` now takes the additional ``base_dir`` argument
+    in case you want to use a different dir than ``~/.cache/``.
+
 0.2.0
 -----
 
 -   Adapt to changes in cachetools 1.1.0.  The only API change
-    is that ``lru_cache`` and ``ttl_cache`` no lonbger accept
+    is that ``lru_cache`` and ``ttl_cache`` no longer accept
     the ``typed`` argument.
 
 0.1.2

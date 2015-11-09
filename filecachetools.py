@@ -15,7 +15,7 @@ from cachetools import cachedmethod  # noqa
 CACHE_DIR = '~/.cache/'
 MARKER = object()
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 
 class FilenameMarker(object):
