@@ -12,7 +12,7 @@ import pickle
 from cachetools import cached
 from cachetools import cachedmethod  # noqa
 
-CACHE_DIR = os.path.expanduser('~/.cache/')
+CACHE_DIR = '~/.cache/'
 MARKER = object()
 
 __version__ = '0.2.0'
@@ -152,11 +152,12 @@ class BaseCache(object):
 
 class Cache(BaseCache):
 	"""Mutable mapping to serve as a simple cache or cache base class."""
-	def __init__(self, name, maxsize, ttl=None, missing=None, protocol=None):
+	def __init__(self, name, maxsize,
+			ttl=None, missing=None, protocol=None, base_dir=CACHE_DIR):
 		BaseCache.__init__(self, maxsize, ttl=ttl, missing=missing)
 		self.protocol = protocol
 		self.name = name
-		self.dir_name = os.path.join(CACHE_DIR, name)
+		self.dir_name = os.path.join(os.path.expanduser(base_dir), name)
 
 		if not os.path.exists(self.dir_name):
 			os.makedirs(self.dir_name)
