@@ -1,31 +1,22 @@
 #!/usr/bin/env python
 
+import os
+import re
 from setuptools import setup
 
+DIRNAME = os.path.abspath(os.path.dirname(__file__))
+rel = lambda *parts: os.path.abspath(os.path.join(DIRNAME, *parts))
 
-with open('filecachetools.py') as fh:
-	docstring = []
-	docstring_done = False
-
-	for line in fh:
-		line = line.rstrip()
-
-		if line == '"""':
-			docstring_done = True
-		elif not docstring_done:
-			docstring.append(line)
-		elif line.startswith('__version__ = '):
-			version = line[15:].rstrip('\'')
-			break
-
-	docstring = '\n'.join(docstring)[3:]
+README = open(rel('README.rst')).read()
+MAIN = open(rel('filecachetools.py')).read()
+VERSION = re.search("__version__ = '([^']+)'", MAIN).group(1)
 
 
 setup(
 	name='filecachetools',
-	version=version,
+	version=VERSION,
 	description="cachetools compatible persistent cache",
-	long_description=docstring,
+	long_description=README,
 	url='https://github.com/xi/filecachetools',
 	author='Tobias Bengfort',
 	author_email='tobias.bengfort@posteo.de',
